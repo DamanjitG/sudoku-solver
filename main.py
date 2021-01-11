@@ -1,12 +1,15 @@
-sudokuBoard = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
-               [6, 0, 0, 1, 9, 5, 0, 0, 0],
-               [0, 9, 8, 0, 0, 0, 0, 6, 0],
-               [8, 0, 0, 0, 6, 0, 0, 0, 3],
-               [4, 0, 0, 8, 0, 3, 0, 0, 1],
-               [7, 0, 0, 0, 2, 0, 0, 0, 6],
-               [0, 6, 0, 0, 0, 0, 2, 8, 0],
-               [0, 0, 0, 4, 1, 9, 0, 0, 5],
-               [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+sudokuBoard = []
+print('When inputting the sudoku board, please enter the values in the row, separated by spaces.')
+print('Note that empty squares should be entered as zero.')
+print('An example row input might look like the following:')
+print('1 2 0 7 4 0 5 9 3')
+print()
+for i in range(9):
+    print(f'Please enter the values of row {i+1}.')
+    inputRow = input().split()
+    for i in range(len(inputRow)):
+        inputRow[i] = int(inputRow[i])
+    sudokuBoard.append(inputRow)
 
 
 def solve(board):
@@ -25,6 +28,7 @@ def solve(board):
             # the backtracking point - if the solution attempt fails, this space goes back to zero and another
             # possible number will be tried in the for loop
             board[found[0]][found[1]] = 0
+
 
 # check if a specific potential number is valid in a spot on the board
 def validity(board, num, spot):
@@ -58,7 +62,8 @@ def findEmptySpace(board):
     for i in range(len(board)):
         for j in range(len(board[0])):
             if board[i][j] == 0:
-                return i, j # NOTE: this returns the coordinates as y, x
+                return (i, j) # NOTE: this returns the coordinates as y, x
+
     return False
 
 
