@@ -8,9 +8,23 @@ sudokuBoard = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
                [0, 0, 0, 4, 1, 9, 0, 0, 5],
                [0, 0, 0, 0, 8, 0, 0, 7, 9]]
 
-# TODO: solving function
-# def solve(board):
 
+def solve(board):
+    found = findEmptySpace(board)
+    if not found:
+        return True
+
+    for i in range(1, 10):
+        if validity(board, i, found):
+            board[found[0]][found[1]] = i
+
+            # continue along the current solution attempt, return True if it works
+            if solve(board):
+                return True
+
+            # the backtracking point - if the solution attempt fails, this space goes back to zero and another
+            # possible number will be tried in the for loop
+            board[found[0]][found[1]] = 0
 
 # check if a specific potential number is valid in a spot on the board
 def validity(board, num, spot):
@@ -45,6 +59,7 @@ def findEmptySpace(board):
         for j in range(len(board[0])):
             if board[i][j] == 0:
                 return i, j # NOTE: this returns the coordinates as y, x
+    return False
 
 
 # print the board
@@ -55,5 +70,12 @@ def displayBoard(board):
         for j in range(len(board[0])):
             if j % 3 == 0 and j != 0:
                 print(' | ', end='')
-            print(str(board[i][j]) + " ", end='')
+            print(str(board[i][j]) + ' ', end='')
         print()
+
+
+print('Unsolved Sudoku Board\n')
+displayBoard(sudokuBoard)
+print('\nSolved Sudoku Board\n')
+solve(sudokuBoard)
+displayBoard(sudokuBoard)
